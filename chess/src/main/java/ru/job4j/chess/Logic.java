@@ -24,14 +24,32 @@ public class Logic {
     public boolean move(Cell source, Cell dest) {
         boolean rst = false;
         int index = this.findBy(source);
-        if (index != -1) {
-            Cell[] steps = this.figures[index].way(source, dest);
-            if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
-                rst = true;
-                this.figures[index] = this.figures[index].copy(dest);
+        try {
+            if (index != -1) {
+                Cell[] steps = this.figures[index].way(source, dest);
+                if (isWayFree(steps)) {
+                    if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
+                        rst = true;
+                        this.figures[index] = this.figures[index].copy(dest);
+                    }
+                }
             }
+        } catch (IllegalStateException e) {
+            rst = false;
         }
         return rst;
+    }
+
+    public boolean isWayFree(Cell[] steps) {
+        boolean c = true;
+        for (Cell cell : steps) {
+            for (Figure figure : figures) {
+                if ((cell.x == figure.position().x) && (cell.y == figure.position().y)) {
+                    c = false;
+                }
+            }
+        }
+        return c;
     }
 
     public void clean() {
