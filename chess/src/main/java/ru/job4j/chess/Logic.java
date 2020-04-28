@@ -41,15 +41,12 @@ public class Logic {
     }
 
     public boolean isWayFree(Cell[] steps) {
-        boolean c = true;
         for (Cell cell : steps) {
-            for (Figure figure : figures) {
-                if ((cell.x == figure.position().x) && (cell.y == figure.position().y)) {
-                    c = false;
+                if (findBy(cell) != -1) {
+                    break;
                 }
-            }
         }
-        return c;
+        return true;
     }
 
     public void clean() {
