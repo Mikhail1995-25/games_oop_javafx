@@ -41,12 +41,14 @@ public class Logic {
     }
 
     public boolean isWayFree(Cell[] steps) {
+        boolean b = true;
         for (Cell cell : steps) {
                 if (findBy(cell) != -1) {
+                    b = false;
                     break;
                 }
         }
-        return true;
+        return b;
     }
 
     public void clean() {
